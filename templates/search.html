@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Search for a book
+{% endblock %}
+{% block body %}
+{% if error %}
+  <div class="alert alert-danger" role="alert">
+  <strong>{{ error }}</strong>
+  </div>
+{% endif %}
+<h1>Search for a book</h1>
+<form action= "{{url_for('search')}}" method="post">
+  <div class="form-group">
+    <input class="form-control" name="search" placeholder="Search by ISBN, Title, or Author">
+  </div>
+  <div class="form-group">
+      <button class="btn btn-primary">Search</button>
+  </div>
+</form>
+{% if not error %}
+<ul>
+  {% for result in results %}
+  <li>
+    <a href="{{url_for('book', isbn=result.isbn)}}">
+      "{{ result.title }}", by {{ result.author }} ({{ result.year }})
+    </a>
+  </li>
+
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Search for a book
+{% endblock %}
+{% block body %}
+  {% for i in info %}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <h1>{{ i.title }}</h1>
+        <h4>by {{ i.author }}</h4>
+        <h6>({{ i.year }})</h6>
+        <small>ISBN: {{ i.isbn }}</small>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <br><br>
+  <h1 style="text-align: center">Reviews For This Title<h1>
+  <div class="subtext" style="text-align: center; font-size:10px">via Goodreads</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <h5>Average Rating: </h5> <h6>{{ average_rating }}</h6>
+        <h5>Number of reviews: </h5> <h6>{{ ratings_count }}</h6>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <br>
+        <h4>User Reviews:</h4>
+        <ul style="font-size: 14px">
+          {% for item in reviews %}
+           <li>{{item.rating}}: {{item.review}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <br>
+        <h4 style="text-align:center">Submit a Review</h4>
+        {% if error %}
+          <div class="alert alert-danger" role="alert" style="font-size: 14px">
+          <strong>{{ error }}</strong>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+</div>
+<form action= "{{url_for('book', isbn=isbn)}}" method="post">
+  <div class="container" style="font-size:12px">
+    <div class="row">
+      <div class="col-sm">
+        <h6>Rating</h6>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1"> 1
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2"> 2
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3"> 3
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4"> 4
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="5"> 5
+          </label>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="form-group" style="font-size:12px">
+      <label for="review">Tell us your thoughts about "{% for i in info %}{{ i.title }}{% endfor %}":</label>
+        <textarea class="form-control" id="review" name="review" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
+
+
+
+{% endblock %}
